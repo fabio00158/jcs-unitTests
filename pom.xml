@@ -6,6 +6,7 @@
 	<artifactId>jcs-unitTests</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jcs-unitTests</name>
+	<packaging>jar</packaging>
 	<description>migration of two JCS tests from JUnit3 to JUnit4</description>
 	<dependencies>
 		<dependency>
@@ -22,6 +23,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<testSourceDirectory>src/test/it/uniroma2/dicii/isw2/jcs/paramTests</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
