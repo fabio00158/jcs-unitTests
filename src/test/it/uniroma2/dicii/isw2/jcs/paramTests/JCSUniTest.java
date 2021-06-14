@@ -3,10 +3,8 @@ package it.uniroma2.dicii.isw2.jcs.paramTests;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-
 import org.apache.jcs.JCS;
+import org.apache.jcs.access.exception.CacheException;
 
 import java.util.LinkedList;
 import java.util.HashMap;
@@ -17,24 +15,16 @@ import java.util.Random;
  */
 public class JCSUniTest
 {
-    Random random;
-    JCS jcs;
-    LinkedList list;
+    private Random random;
+    private JCS jcs;
+	private LinkedList<?> list;
     
     @Before 
-    public static void configure() {
+    public void configure() throws CacheException {
     	
     	random = new Random();
-    	JCS jcs = JCS.getInstance( "testCache1" );
-        LinkedList list = buildList();
-    }
-    
-    /**
-     * @param testName
-     */
-    public JCSUniTest( String testName )
-    {
-        super( testName );
+    	jcs = JCS.getInstance( "testCache1" );
+        list = buildList();
     }
 
 
@@ -51,7 +41,7 @@ public class JCSUniTest
      * @throws Exception
      */
     @Test 
-    public void testJCS()
+    public void JCSTest()
         throws Exception
     {
 
@@ -60,21 +50,21 @@ public class JCSUniTest
         assertEquals( list, jcs.get( "some:key" ) );
     }
 
-    private LinkedList buildList()
+    private LinkedList<HashMap<String, String>> buildList()
     {
-        LinkedList list = new LinkedList();
+        LinkedList<HashMap<String, String>> list = new LinkedList<HashMap<String, String>>();
 
         for ( int i = 0; i < 100; i++ )
         {
-            list.add( buildMap() );
+            list.add( this.buildMap() );
         }
 
         return list;
     }
 
-    private HashMap buildMap()
+    private HashMap<String, String> buildMap()
     {
-        HashMap map = new HashMap();
+        HashMap<String, String> map = new HashMap<String, String>();
 
         byte[] keyBytes = new byte[32];
         byte[] valBytes = new byte[128];

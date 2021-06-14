@@ -1,6 +1,10 @@
 package it.uniroma2.dicii.isw2.jcs.paramTests;
 
 import static org.junit.Assert.assertNull;
+
+import org.apache.jcs.JCS;
+import org.apache.jcs.access.exception.CacheException;
+
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -16,21 +20,18 @@ public class RemovalTestUtil
      * @param testName
      *            
      */
-    public RemovalTestUtil( String testName )
-    {
-        super( testName );
-    }
     
-    JCS jcs;
+    private JCS jcs;
     
     /**
      * Inizializza una cache con end-start elementi 
      *
      * @param start
      * @param end
+     * @throws CacheException 
      *              
      */
-    private void configureJCSData( int start, int end) {
+    private void configureJCSData( int start, int end) throws CacheException {
         
     	jcs = JCS.getInstance( "testCache1" );
 
@@ -43,8 +44,9 @@ public class RemovalTestUtil
     
     /**
      * Inizializza una cache vuota             
+     * @throws CacheException 
      */
-    private void configureJCSNoData() {
+    private void configureJCSNoData() throws CacheException {
         
     	jcs = JCS.getInstance( "testCache1" );
 
@@ -60,7 +62,7 @@ public class RemovalTestUtil
      * @exception Exception
      *              
      */
-    public void runTestPutThenRemoveCategorical( int start, int end )
+    public void runPutThenRemoveCategoricalTest( int start, int end )
         throws Exception
     {
     	configureJCSData(start, end);
@@ -96,7 +98,7 @@ public class RemovalTestUtil
      *            int
      * @throws Exception
      */
-    public void runPutInRange( int start, int end )
+    public void runPutInRangeTest( int start, int end )
         throws Exception
     {
         configureJCSData(start, end);
@@ -123,7 +125,7 @@ public class RemovalTestUtil
      *            boolean -- check to see if the items are in the cache.
      * @throws Exception
      */
-    public void runGetInRange( int start, int end, boolean check )
+    public void runGetInRangeTest( int start, int end, boolean check )
         throws Exception
     {
         configureJCSNoData();
