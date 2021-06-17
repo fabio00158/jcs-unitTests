@@ -1,16 +1,25 @@
 package it.uniroma2.dicii.isw2.jcs.paramTests;
 
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.jcs.JCS;
 import org.apache.jcs.access.exception.CacheException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-import static org.junit.Assert.assertNotNull;
+
 
 /**
  * Simple methods to be run by active test suites that test removal.
  *
  */
+@RunWith(Parameterized.class)
 public class RemovalTestUtil
 {
 
@@ -22,34 +31,39 @@ public class RemovalTestUtil
      */
     
     private JCS jcs;
+    private int startParam;
+    private int endParam;
+    private Boolean checkParam;
     
-    /**
-     * Inizializza una cache con end-start elementi 
-     *
-     * @param start
-     * @param end
-     * @throws CacheException 
-     *              
-     */
-    private void configureJCSData( int start, int end) throws CacheException {
-        
-    	jcs = JCS.getInstance( "testCache1" );
-
-        for ( int i = start; i <= end; i++ )
-        {
-            jcs.put( i + ":key", "data" + i );
-        }
-
+    @Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                { 0, 5, false },
+                { 1, 10, false }
+        });
+    }
+    
+    public RemovalTestUtil(int start, int end, Boolean check) {
+    	this.startParam = start;
+    	this.endParam = end;
+    	this.checkParam = check;
     }
     
     /**
      * Inizializza una cache vuota             
      * @throws CacheException 
      */
-    private void configureJCSNoData() throws CacheException {
+    private void configureJCS() throws CacheException {
         
     	jcs = JCS.getInstance( "testCache1" );
 
+    }
+    
+    @Test
+    public void runRemovalTests() throws Exception {
+    	runTestPutThenRemoveCategorical(startParam, endParam);
+    	runTestPutInRange(startParam, endParam);
+    	runTestGetInRange(startParam, endParam, checkParam);
     }
 
     /**
@@ -62,10 +76,16 @@ public class RemovalTestUtil
      * @exception Exception
      *              
      */
-    public void runPutThenRemoveCategoricalTest( int start, int end )
+    public void runTestPutThenRemoveCategorical( int start, int end )
         throws Exception
     {
-    	configureJCSData(start, end);
+    	configureJCS();
+    	
+    	for ( int i = start; i <= end; i++ )
+        {
+            jcs.put( i + ":key", "data" + i );
+        }
+
 
         for ( int i = end; i >= start; i-- )
         {
@@ -98,10 +118,16 @@ public class RemovalTestUtil
      *            int
      * @throws Exception
      */
-    public void runPutInRangeTest( int start, int end )
+    public void runTestPutInRange( int start, int end )
         throws Exception
     {
-        configureJCSData(start, end);
+        configureJCS();
+        
+        for ( int i = start; i <= end; i++ )
+        {
+            jcs.put( i + ":key", "data" + i );
+        }
+
 
         for ( int i = end; i >= start; i-- )
         {
@@ -125,10 +151,10 @@ public class RemovalTestUtil
      *            boolean -- check to see if the items are in the cache.
      * @throws Exception
      */
-    public void runGetInRangeTest( int start, int end, boolean check )
+    public void runTestGetInRange( int start, int end, boolean check )
         throws Exception
     {
-        configureJCSNoData();
+        configureJCS();
 
         // don't care if they are found
         for ( int i = end; i >= start; i-- )
