@@ -39,7 +39,8 @@ public class RemovalTestUtil
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 { 0, 5, false },
-                { 1, 10, false }
+                { 1, 10, false },
+                { 1, 8, true }
         });
     }
     

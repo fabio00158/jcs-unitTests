@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: it.uniroma2.dicii.isw2.jcs.paramTests.JCSUniTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.07 s - in it.uniroma2.dicii.isw2.jcs.paramTests.JCSUniTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.332 s - in it.uniroma2.dicii.isw2.jcs.paramTests.JCSUniTest
